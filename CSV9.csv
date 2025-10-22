@@ -1,0 +1,9 @@
+﻿Impact Category;Fine particulate matter formation ;Fossil resource scarcity ;Freshwater ecotoxicity;Freshwater eutrophication ;Global warming;Human carcinogenic toxicity ;Human non-carcinogenic toxicity -;Ionizing radiation ;Land use ;Marine ecotoxicity ;Marine eutrophication ;Mineral resource scarcity ;Ozone formation, Human health ;Ozone formation, Terrestrial ecosystems ;Stratospheric ozone depletion ;Terrestrial acidification ;Terrestrial ecotoxicity ;Water consumption 
+Unit;kg PM2.5 eq;kg oil eq;kg 1,4-DCB;kg P eq;kg CO2 eq;kg 1,4-DCB;kg 1,4-DCB;kBq Co-60 eq;m2a crop eq;kg 1,4-DCB;kg N eq;kg Cu eq;kg NOx eq;kg NOx eq;kg CFC11 eq;kg SO2 eq;kg 1,4-DCB;m3
+Carbon Monoxide [kg CO / m^3];0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+Nitrogene Oxydes [kg NOx / m^3];0.28;0;0;0;0;0;0;0;0;0;0;0;1.53;1.53;0;0.912;0;0
+Formldehyd [kg CH2O / m^3];0;0;0.0141;0;0;1.87;0.9;0;0;0.0371;0;0;0.167;0.269;0;0;15.2;0
+Methane Slop [kg CH4 / m^3];0;0;0;0;34;0;0;0;0;0;0;0;0;0;0;0;0;0
+Particulate Matter [kg/m^3];0;0;0;0;1;0;0;0;0;0;0;0;0;0;0;0;0;0
+Sulfur Dioxide [kg SO2 / m^3];0.28;0;0;0;0;0;0;0;0;0;0;0;1.53;1.53;0;0.912;0;0
+Ammonia [kg NH3 / m^3];0;0;0.0141;0;0;1.87;0.9;0;0;0.0371;0;0;0.167;0.269;0;0;15.2;0

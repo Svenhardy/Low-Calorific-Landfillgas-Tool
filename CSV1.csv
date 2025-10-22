@@ -1,0 +1,11 @@
+﻿Country;Energy Price [€/kWh];Energy Price th. [€/kWh];Depreciation [a];Tax rate [%];Maintenance SFR [€/maintenance mix];Maintenance DFE [€/maintenance mix];Maintenance OE [€/maintenance mix];Maintenance Flare [€/maintenance mix];Maintenance CHP [€/maintenance mix];;;
+Germany;0.2;0.3;3;20;300;350;250;250;225;;;
+Poland;0.15;0.25;3;15;150;299;100;133;108;;;
+Sweden;0.18;0.23;3;20;300;350;250;250;225;;;
+Lithuania;0.19;0.23;3;10;100;150;80;90;80;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;

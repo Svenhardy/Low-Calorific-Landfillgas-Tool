@@ -1,0 +1,6 @@
+﻿Engine Load[%];Oil change [opr. h];Maintenance Period [opr. h];Coolant change [opr. H];Fuel Consumpion Factor;Electricity Consumption factor
+20;3000;15000;10000;1;1
+40;2000;10000;8000;1;1
+60;1500;8000;7000;1;1
+80;1000;7000;4000;1;1
+100;750;6000;2000;1;1
