@@ -4,9 +4,10 @@ Oxygen Enrichment Engine [€/Unit];50000;;;;;;;;;;;
 SFR [€/Unit];50000;;;;;;;;;;;
 Engine oil [€/L];2;;;;;;;;;;;
 Chemical SFR [€/L];5;;;;;;;;;;;
-Oxygen [€/m^3];3;;;;;;;;;;;
+Oxygen price [€/m^3];3;;;;;;;;;;;
 Coolant [€/L];2;;;;;;;;;;;
 Pilot Fuel [€/L];4;;;;;;;;;;;
 Diesel;2;;;;;;;;;;;
 ;;;;;;;;;;;;
 ;;;;;;;;;;;;
+
