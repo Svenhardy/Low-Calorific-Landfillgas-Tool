@@ -6752,8 +6752,11 @@ function calculateSFREconomicResults() {
             container.innerHTML = html;
         }
 
+
+
         // Helper function to get unit for impact category
         function getUnitForCategory(category) {
+            
             const units = {
                 'Fine particulate matter formation': 'kg PM2.5 eq',
                 'Fossil resource scarcity': 'kg oil eq',
