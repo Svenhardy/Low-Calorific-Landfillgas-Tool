@@ -484,162 +484,169 @@ appState.charts.ecoDetailBar = safeCreateChart('eco-detail-bar-chart', {
             return { labels, values, colors, borderColors };
         }
 
-        // Get Detailed Categories for Bar Chart
-        function getDetailedCategories(technology, year, impactCategory, lifeStage, ecologicalResults) {
-            const labels = [];
-            const values = [];
-            const colors = [];
-            const borderColors = [];
-            
-            let categories = [];
-            const baseColor = '#2196F3';
-            
-            switch(technology) {
-                case 'dfe':
-                    if (lifeStage === 'operating-resources') {
-                        categories = [
-                            { label: 'Maintenance', field: 'O4' },
-                            { label: 'Oil', field: 'O5' },
-                            { label: 'Coolant', field: 'O6' },
-                            { label: 'Electricity', field: 'O8' }
-                        ];
-                    } else if (lifeStage === 'emission-impacts') {
-                        // Get emission types from O7_detailed
-                        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
-                        emissionTypes.forEach(emission => {
-                            categories.push({ 
-                                label: formatEmissionName(emission), 
-                                field: 'O7_detailed',
-                                subfield: emission
-                            });
-                        });
-                    } else if (lifeStage === 'flare-impact') {
-                        categories = [
-                            { label: 'Electricity', field: 'O9' },
-                            { label: 'Maintenance', field: 'O10' },
-                            { label: 'Emissions', field: 'O11' }
-                        ];
-                    }
-                    break;
-                    
-                case 'oec':
-                    if (lifeStage === 'operating-resources') {
-                        categories = [
-                            { label: 'Maintenance', field: 'OO4' },
-                            { label: 'Oil', field: 'OO5' },
-                            { label: 'Coolant', field: 'OO6' },
-                            { label: 'Electricity', field: 'OO8' }
-                        ];
-                    } else if (lifeStage === 'emission-impacts') {
-                        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
-                        emissionTypes.forEach(emission => {
-                            categories.push({ 
-                                label: formatEmissionName(emission), 
-                                field: 'OO7_detailed',
-                                subfield: emission
-                            });
-                        });
-                    } else if (lifeStage === 'flare-impact') {
-                        categories = [
-                            { label: 'Electricity', field: 'OO9' },
-                            { label: 'Maintenance', field: 'OO10' },
-                            { label: 'Emissions', field: 'OO11' }
-                        ];
-                    }
-                    break;
-                    
-                case 'sfr':
-                    if (lifeStage === 'operating-resources') {
-                        categories = [
-                            { label: 'Maintenance', field: 'OS5' },
-                            { label: 'Electricity', field: 'OS6' }
-                        ];
-                    } else if (lifeStage === 'chp-operating-resources') {
-                        categories = [
-                            { label: 'Maintenance', field: 'OS9' },
-                            { label: 'Oil', field: 'OS10' },
-                            { label: 'Coolant', field: 'OS11' },
-                            { label: 'Electricity', field: 'OS12' }
-                        ];
-                    } else if (lifeStage === 'emission-impacts') {
-                        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
-                        emissionTypes.forEach(emission => {
-                            categories.push({ 
-                                label: formatEmissionName(emission), 
-                                field: 'OS16_detailed',
-                                subfield: emission
-                            });
-                        });
-                    } else if (lifeStage === 'flare-impact') {
-                        categories = [
-                            { label: 'Electricity', field: 'OS13' },
-                            { label: 'Maintenance', field: 'OS14' },
-                            { label: 'Emissions', field: 'OS15' }
-                        ];
-                    }
-                    break;
-                    
-                case 'flare':
-                    if (lifeStage === 'emission-impacts') {
-                        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
-                        emissionTypes.forEach(emission => {
-                            categories.push({ 
-                                label: formatEmissionName(emission), 
-                                field: 'OF3_detailed',
-                                subfield: emission
-                            });
-                        });
-                    }
-                    break;
-            }
-            
-            // Generate colors
-            const colorPalette = ['#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#f44336', '#00BCD4', '#FFC107'];
-            
-            categories.forEach((cat, index) => {
-                labels.push(cat.label);
-                colors.push(colorPalette[index % colorPalette.length]);
-                borderColors.push(colorPalette[index % colorPalette.length]);
+            // Get Detailed Categories for Bar Chart
+            function getDetailedCategories(technology, year, impactCategory, lifeStage, ecologicalResults) {
+                const labels = [];
+                const values = [];
+                const colors = [];
+                const borderColors = [];
                 
-                let value = 0;
-                if (year === 'total') {
-                    // Sum over all years
-                    ecologicalResults.yearlyResults.forEach(yearResult => {
-                        if (cat.subfield) {
-                            // For detailed emissions
-                            if (yearResult[cat.field] && yearResult[cat.field][impactCategory] && yearResult[cat.field][impactCategory][cat.subfield] !== undefined) {
-                                value += yearResult[cat.field][impactCategory][cat.subfield];
-                            }
-                        } else {
-                            // For regular fields
-                            if (yearResult[cat.field] && yearResult[cat.field][impactCategory] !== undefined) {
-                                value += yearResult[cat.field][impactCategory];
-                            }
+                let categories = [];
+                const baseColor = '#2196F3';
+                
+                switch(technology) {
+                    case 'dfe':
+                        if (lifeStage === 'operating-resources') {
+                            categories = [
+                                { label: 'Maintenance', field: 'O4' },
+                                { label: 'Oil', field: 'O5' },
+                                { label: 'Coolant', field: 'O6' },
+                                { label: 'Electricity', field: 'O8' }
+                            ];
+                        } else if (lifeStage === 'emission-impacts') {
+                            // Get emission types from O7_detailed
+                            const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
+                            emissionTypes.forEach(emission => {
+                                categories.push({ 
+                                    label: formatEmissionName(emission), 
+                                    field: 'O7_detailed',
+                                    subfield: emission
+                                });
+                            });
+                        } else if (lifeStage === 'flare-impact') {
+                            categories = [
+                                { label: 'Electricity', field: 'O9' },
+                                { label: 'Maintenance', field: 'O10' },
+                                { label: 'Emissions', field: 'O11' }
+                            ];
                         }
-                    });
-                } else {
-                    // Get specific year
-                    const yearIndex = parseInt(year) - 1;
-                    if (ecologicalResults.yearlyResults[yearIndex]) {
-                        const yearResult = ecologicalResults.yearlyResults[yearIndex];
-                        if (cat.subfield) {
-                            // For detailed emissions
-                            if (yearResult[cat.field] && yearResult[cat.field][impactCategory] && yearResult[cat.field][impactCategory][cat.subfield] !== undefined) {
-                                value = yearResult[cat.field][impactCategory][cat.subfield];
+                        break;
+                        
+                    case 'oec':
+                        if (lifeStage === 'operating-resources') {
+                            categories = [
+                                { label: 'Maintenance', field: 'OO4' },
+                                { label: 'Oil', field: 'OO5' },
+                                { label: 'Coolant', field: 'OO6' },
+                                { label: 'Electricity', field: 'OO8' }
+                            ];
+                        } else if (lifeStage === 'emission-impacts') {
+                            const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
+                            emissionTypes.forEach(emission => {
+                                categories.push({ 
+                                    label: formatEmissionName(emission), 
+                                    field: 'OO7_detailed',
+                                    subfield: emission
+                                });
+                            });
+                        } else if (lifeStage === 'flare-impact') {
+                            categories = [
+                                { label: 'Electricity', field: 'OO9' },
+                                { label: 'Maintenance', field: 'OO10' },
+                                { label: 'Emissions', field: 'OO11' }
+                            ];
+                        }
+                        break;
+                        
+case 'sfr':
+    if (lifeStage === 'operating-resources') {
+        categories = [
+            { label: 'Maintenance', field: 'OS5' },
+            { label: 'Electricity', field: 'OS6' }
+        ];
+    } else if (lifeStage === 'chp-operating-resources') {
+        // NEU: CHP Operating Resources
+        categories = [
+            { label: 'Maintenance', field: 'OS9' },
+            { label: 'Oil', field: 'OS10' },
+            { label: 'Coolant', field: 'OS11' },
+            { label: 'Energy', field: 'OS12' }
+        ];
+    } else if (lifeStage === 'emission-impacts') {
+        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
+        emissionTypes.forEach(emission => {
+            categories.push({ 
+                label: formatEmissionName(emission), 
+                field: 'OS16_detailed',
+                subfield: emission
+            });
+        });
+    } else if (lifeStage === 'flare-impact') {
+        categories = [
+            { label: 'Electricity', field: 'OS13' },
+            { label: 'Maintenance', field: 'OS14' },
+            { label: 'Emissions', field: 'OS15' }
+        ];
+    }
+    break;
+                        
+case 'flare':
+    if (lifeStage === 'operating-resources') {
+        // NEU: Operating Resources für Flare - KORRIGIERT
+        categories = [
+            { label: 'Maintenance', field: 'OF2' },
+            { label: 'Electricity', field: 'OF1' }
+        ];
+    } else if (lifeStage === 'emission-impacts') {
+        const emissionTypes = ['carbonMonoxide', 'nitrogenOxides', 'formaldehyde', 'methaneSlop', 'particulateMatter', 'sulfurDioxide', 'ammonia'];
+        emissionTypes.forEach(emission => {
+            categories.push({ 
+                label: formatEmissionName(emission), 
+                field: 'OF3_detailed',
+                subfield: emission
+            });
+        });
+    }
+    break;
+                }
+                
+                // Generate colors
+                const colorPalette = ['#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#f44336', '#00BCD4', '#FFC107'];
+                
+                categories.forEach((cat, index) => {
+                    labels.push(cat.label);
+                    colors.push(colorPalette[index % colorPalette.length]);
+                    borderColors.push(colorPalette[index % colorPalette.length]);
+                    
+                    let value = 0;
+                    if (year === 'total') {
+                        // Sum over all years
+                        ecologicalResults.yearlyResults.forEach(yearResult => {
+                            if (cat.subfield) {
+                                // For detailed emissions
+                                if (yearResult[cat.field] && yearResult[cat.field][impactCategory] && yearResult[cat.field][impactCategory][cat.subfield] !== undefined) {
+                                    value += yearResult[cat.field][impactCategory][cat.subfield];
+                                }
+                            } else {
+                                // For regular fields
+                                if (yearResult[cat.field] && yearResult[cat.field][impactCategory] !== undefined) {
+                                    value += yearResult[cat.field][impactCategory];
+                                }
                             }
-                        } else {
-                            // For regular fields
-                            if (yearResult[cat.field] && yearResult[cat.field][impactCategory] !== undefined) {
-                                value = yearResult[cat.field][impactCategory];
+                        });
+                    } else {
+                        // Get specific year
+                        const yearIndex = parseInt(year) - 1;
+                        if (ecologicalResults.yearlyResults[yearIndex]) {
+                            const yearResult = ecologicalResults.yearlyResults[yearIndex];
+                            if (cat.subfield) {
+                                // For detailed emissions
+                                if (yearResult[cat.field] && yearResult[cat.field][impactCategory] && yearResult[cat.field][impactCategory][cat.subfield] !== undefined) {
+                                    value = yearResult[cat.field][impactCategory][cat.subfield];
+                                }
+                            } else {
+                                // For regular fields
+                                if (yearResult[cat.field] && yearResult[cat.field][impactCategory] !== undefined) {
+                                    value = yearResult[cat.field][impactCategory];
+                                }
                             }
                         }
                     }
-                }
-                values.push(value);
-            });
-            
-            return { labels, values, colors, borderColors };
-        }
+                    values.push(value);
+                });
+                
+                return { labels, values, colors, borderColors };
+            }
 
         // Format emission name for display
         function formatEmissionName(emission) {
@@ -807,81 +814,87 @@ appState.charts.ecoDetailBar = safeCreateChart('eco-detail-bar-chart', {
             return maps[technology]?.[label];
         }
 
-        // Helper function to get detailed field info
-        function getDetailedFieldInfo(technology, lifeStage, label) {
-            // Map label back to field info
-            const fieldMaps = {
-                'dfe': {
-                    'operating-resources': {
-                        'Maintenance': { field: 'O4' },
-                        'Oil': { field: 'O5' },
-                        'Coolant': { field: 'O6' },
-                        'Electricity': { field: 'O8' }
+            // Helper function to get detailed field info
+            function getDetailedFieldInfo(technology, lifeStage, label) {
+                // Map label back to field info
+                const fieldMaps = {
+                    'dfe': {
+                        'operating-resources': {
+                            'Maintenance': { field: 'O4' },
+                            'Oil': { field: 'O5' },
+                            'Coolant': { field: 'O6' },
+                            'Electricity': { field: 'O8' }
+                        },
+                        'flare-impact': {
+                            'Electricity': { field: 'O9' },
+                            'Maintenance': { field: 'O10' },
+                            'Emissions': { field: 'O11' }
+                        }
                     },
-                    'flare-impact': {
-                        'Electricity': { field: 'O9' },
-                        'Maintenance': { field: 'O10' },
-                        'Emissions': { field: 'O11' }
-                    }
-                },
-                'oec': {
-                    'operating-resources': {
-                        'Maintenance': { field: 'OO4' },
-                        'Oil': { field: 'OO5' },
-                        'Coolant': { field: 'OO6' },
-                        'Electricity': { field: 'OO8' }
+                    'oec': {
+                        'operating-resources': {
+                            'Maintenance': { field: 'OO4' },
+                            'Oil': { field: 'OO5' },
+                            'Coolant': { field: 'OO6' },
+                            'Electricity': { field: 'OO8' }
+                        },
+                        'flare-impact': {
+                            'Electricity': { field: 'OO9' },
+                            'Maintenance': { field: 'OO10' },
+                            'Emissions': { field: 'OO11' }
+                        }
                     },
-                    'flare-impact': {
-                        'Electricity': { field: 'OO9' },
-                        'Maintenance': { field: 'OO10' },
-                        'Emissions': { field: 'OO11' }
-                    }
-                },
-                'sfr': {
-                    'operating-resources': {
-                        'Maintenance': { field: 'OS5' },
-                        'Electricity': { field: 'OS6' }
-                    },
-                    'chp-operating-resources': {
-                        'Maintenance': { field: 'OS9' },
-                        'Oil': { field: 'OS10' },
-                        'Coolant': { field: 'OS11' },
-                        'Electricity': { field: 'OS12' }
-                    },
-                    'flare-impact': {
-                        'Electricity': { field: 'OS13' },
-                        'Maintenance': { field: 'OS14' },
-                        'Emissions': { field: 'OS15' }
-                    }
+'sfr': {
+    'operating-resources': {
+        'Maintenance': { field: 'OS5' },
+        'Electricity': { field: 'OS6' }
+    },
+    'chp-operating-resources': {
+        'Maintenance': { field: 'OS9' },
+        'Oil': { field: 'OS10' },
+        'Coolant': { field: 'OS11' },
+        'Energy': { field: 'OS12' }
+    },
+    'flare-impact': {
+        'Electricity': { field: 'OS13' },
+        'Maintenance': { field: 'OS14' },
+        'Emissions': { field: 'OS15' }
+    }
+},
+'flare': {
+    'operating-resources': {
+        'Maintenance': { field: 'OF2' },
+        'Electricity': { field: 'OF1' }
+    }
+}
+                };
+                
+                // Check if it's an emission
+                const emissionMap = {
+                    'Carbon Monoxide': 'carbonMonoxide',
+                    'Nitrogen Oxides': 'nitrogenOxides',
+                    'Formaldehyde': 'formaldehyde',
+                    'Methane Slip': 'methaneSlop',
+                    'Particulate Matter': 'particulateMatter',
+                    'Sulfur Dioxide': 'sulfurDioxide',
+                    'Ammonia': 'ammonia'
+                };
+                
+                if (emissionMap[label]) {
+                    const fieldPrefix = {
+                        'dfe': 'O7_detailed',
+                        'oec': 'OO7_detailed',
+                        'sfr': 'OS16_detailed',
+                        'flare': 'OF3_detailed'
+                    };
+                    return { 
+                        field: fieldPrefix[technology], 
+                        subfield: emissionMap[label] 
+                    };
                 }
-            };
-            
-            // Check if it's an emission
-            const emissionMap = {
-                'Carbon Monoxide': 'carbonMonoxide',
-                'Nitrogen Oxides': 'nitrogenOxides',
-                'Formaldehyde': 'formaldehyde',
-                'Methane Slip': 'methaneSlop',
-                'Particulate Matter': 'particulateMatter',
-                'Sulfur Dioxide': 'sulfurDioxide',
-                'Ammonia': 'ammonia'
-            };
-            
-            if (emissionMap[label]) {
-                const fieldPrefix = {
-                    'dfe': 'O7_detailed',
-                    'oec': 'OO7_detailed',
-                    'sfr': 'OS16_detailed',
-                    'flare': 'OF3_detailed'
-                };
-                return { 
-                    field: fieldPrefix[technology], 
-                    subfield: emissionMap[label] 
-                };
+                
+                return fieldMaps[technology]?.[lifeStage]?.[label];
             }
-            
-            return fieldMaps[technology]?.[lifeStage]?.[label];
-        }
         
 // Update Economic Results displays
         function updateEconomicResults() {
@@ -1994,6 +2007,7 @@ appState.charts.econPie = safeCreateChart('econ-pie-chart', {
                 }
             } else if (tabId === 'ecological-results') {
                 // Update ecological results when tab is activated
+                updateEcoLifeStageOptions(); // NEU: Life Stage Optionen aktualisieren
                 if (appState.dfeResults && appState.dfeResults.ecologicalResults) {
                     setTimeout(updateEcologicalResults, 100);
                 }
@@ -2177,6 +2191,7 @@ appState.charts.econPie = safeCreateChart('econ-pie-chart', {
                 updateGeneralResults();
                 updateEcologicalResults();
                 updateEconomicResults();
+                updateEcoLifeStageOptions();
                 
                 // Update interim results
                 displayInterimGasDevelopmentResults();
@@ -2233,20 +2248,9 @@ appState.charts.econPie = safeCreateChart('econ-pie-chart', {
             console.log('Success:', message);
         }
 
-// Populate dropdowns for result tabs
-        function populateResultDropdowns() {
-            const years = appState.inputs.C;
-            
-            // Get impact categories from ecological results
-            let impactCategories = [];
-            if (appState.dfeResults.ecologicalResults) {
-                impactCategories = appState.dfeResults.ecologicalResults.impactCategories;
-            }
-
-// Update life stage options based on selected technology
-    function updateEcoLifeStageOptions() {
-        const technology = document.getElementById('eco-technology-select').value;
-        const lifeStageSelect = document.getElementById('eco-lifestage-select');
+function updateEcoLifeStageOptions() {
+    const technology = document.getElementById('eco-technology-select').value;
+    const lifeStageSelect = document.getElementById('eco-lifestage-select');
     
     if (!lifeStageSelect) return;
     
@@ -2274,15 +2278,17 @@ appState.charts.econPie = safeCreateChart('econ-pie-chart', {
         case 'sfr':
             options = [
                 { value: 'operating-resources', label: 'SFR Operating Resources' },
-                { value: 'chp-operating-resources', label: 'CHP Operating Resources' },
+                { value: 'chp-operating-resources', label: 'CHP Operating Resources' }, // NEU
                 { value: 'emission-impacts', label: 'CHP Emission Impacts' },
                 { value: 'flare-impact', label: 'Flare Impact' }
             ];
             break;
         case 'flare':
             options = [
+                { value: 'operating-resources', label: 'Operating Resources' }, // NEU
                 { value: 'emission-impacts', label: 'Emission Impacts' }
             ];
+            // "Flare Impact" wird NICHT hinzugefügt für Flare Technology
             break;
     }
     
@@ -2294,6 +2300,18 @@ appState.charts.econPie = safeCreateChart('econ-pie-chart', {
         lifeStageSelect.appendChild(option);
     });
 }
+
+// Populate dropdowns for result tabs
+        function populateResultDropdowns() {
+            const years = appState.inputs.C;
+            
+            // Get impact categories from ecological results
+            let impactCategories = [];
+            if (appState.dfeResults.ecologicalResults) {
+                impactCategories = appState.dfeResults.ecologicalResults.impactCategories;
+            }
+
+
             
             // Populate General Results impact category dropdown
             const generalImpactSelect = document.getElementById('general-impact-category');
